@@ -43,27 +43,27 @@ class GetWeatherHandler(AbstractRequestHandler):
         # the following constants are hardcoded for demo purposes only.
         # In a real skill these values would be pulled from an API
         # set to 2 in order to get the other experience.
-        weatherCode = 1
+        weather_code = 1
         
         # logic to determine which assets should be paired with the forecast
-        if weatherCode is 1:
+        if weather_code is 1:
             audio = "soundbank://soundlibrary/animals/amzn_sfx_bird_forest_short_01"
-            bgImage = "https://images.pexels.com/photos/777211/winter-sunset-purple-sky-777211.jpeg"
-            weatherDescription = "sunny"
-            currentTemp = 75
-        elif weatherCode == 2:
-            weatherDescription = "cloudy"
-            currentTemp = 65
+            bg_image = "https://images.pexels.com/photos/777211/winter-sunset-purple-sky-777211.jpeg"
+            weather_description = "sunny"
+            current_temp = 75
+        elif weather_code == 2:
+            weather_description = "cloudy"
+            current_temp = 65
             audio = "soundbank://soundlibrary/nature/amzn_sfx_rain_03"
-            bgImage = "https://images.pexels.com/photos/1089455/pexels-photo-1089455.jpeg"
+            bg_image = "https://images.pexels.com/photos/1089455/pexels-photo-1089455.jpeg"
         
         if(get_supported_interfaces(handler_input).alexa_presentation_apl != None):
-            visual_data = {"myData": {"bgImage": bgImage, "currentTemp": currentTemp, "weatherDescription": weatherDescription}}
+            visual_data = {"myData": {"bgImage": bg_image, "currentTemp": current_temp, "weatherDescription": weather_description}}
             linked_visual_doc = {"type": LINKED_DOC, "src":"doc://alexa/apl/documents/weather_v"}
-            handler_input.response_builder.add_directive(APLRenderDoc(token="aplDoc", document=linked_visual_doc, datasources=visual_data))
+            handler_input.response_builder.add_directive(APLRenderDoc(token="apl_doc", document=linked_visual_doc, datasources=visual_data))
         
         # the values above will be inserted into the SSML before it's sent to the APL response
-        speak_output = data["translation"]["WEATHER_REPORT"].format(temperature=currentTemp, weatherDescription=weatherDescription)
+        speak_output = data["translation"]["WEATHER_REPORT"].format(temperature=current_temp, weatherDescription=weather_description)
         
         audio_data = {"myData" : {"ssml": speak_output, "audio": audio}}
         
